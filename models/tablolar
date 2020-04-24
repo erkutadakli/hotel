@@ -1,0 +1,70 @@
+room
+---------
+id
+status
+capacity
+
+market
+marketid
+title
+description
+
+
+
+
+languageitem
+id
+tableid 
+key: // title , description vs
+value: string
+langcode
+
+
+season
+id
+begindate
+enddate
+title
+
+price
+id
+roomid
+seasonid
+price
+marketid
+
+
+exports.all = (req, res, next) => {
+    Room.findAll({
+        include: [LanguageItem],
+    })
+    .then(resp=> {
+        const responseData = {
+            data: resp,
+            success: true,
+            error: false
+        };
+        res.send(responseData);
+    })
+}
+
+for (var m = moment(a); m.isBefore(b); m.add(1, 'days')) {
+        const queryDate = m.format('YYYY-MM-DD');
+        const where = {
+            [Op.and]: [{
+                begindate: {
+                    [Op.lte]: queryDate
+                }
+            }, {
+                enddate: {
+                    [Op.gte]: queryDate
+                }
+            }]
+        };
+        await Season.findAll({
+            include: [Price],
+            where,
+        }).then(resp => {
+          res.send(resp);
+        })
+    }
